@@ -1,8 +1,13 @@
 {
   "name": "@vslutov/jsxgettext-stream",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A tool like jsxgettext, but works for es6 + jsx that babel support",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "parser.js",
+    "bin/cli.js"
+  ],
   "directories": {
     "test": "test"
   },
@@ -33,7 +38,7 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "author": "Fraser Xu",
+  "author": "Vladimir Lutov",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vslutov/babel-jsxgettext/issues"
@@ -45,7 +50,6 @@
     "gettext-parser": "^1.3.1",
     "meow": "^5.0.0",
     "mz": "^2.7.0",
-    "npm": "^6.0.0",
     "plugin-error": "^1.0.1",
     "through2": "^2.0.3"
   },
@@ -54,8 +58,6 @@
     "standard": "^11.0.1"
   },
   "engines": {
-    "node": "^9.8.0",
-    "npm": "^6.0.0",
-    "yarn": "^1.5.1"
+    "node": ">=9.8.0"
   }
 }
