@@ -1,11 +1,11 @@
-var fs = require('fs')
-var path = require('path')
-var gettextParser = require('gettext-parser')
-var babylon = require('babylon')
-var walk = require('babylon-walk')
+const fs = require('fs')
+const path = require('path')
+const gettextParser = require('gettext-parser')
+const babylon = require('babylon')
+const walk = require('babylon-walk')
 
-var functionNames = require('./lib/constant').DEFAULT_FUNCTION_NAMES
-var DEFAULT_HEADERS = require('./lib/constant').DEFAULT_HEADERS
+const functionNames = require('./lib/constant').DEFAULT_FUNCTION_NAMES
+const DEFAULT_HEADERS = require('./lib/constant').DEFAULT_HEADERS
 
 /**
  * The parser function
@@ -14,7 +14,7 @@ var DEFAULT_HEADERS = require('./lib/constant').DEFAULT_HEADERS
  * @param  {Function} cb     The callback function
  */
 function parser (inputs, output, plugins, cb) {
-  var data = {
+  const data = {
     charset: 'UTF-8',
     headers: DEFAULT_HEADERS,
     translations: {
@@ -22,48 +22,48 @@ function parser (inputs, output, plugins, cb) {
     }
   }
 
-  var defaultContext = data.translations.context
+  const defaultContext = data.translations.context
 
-  var headers = data.headers
+  const headers = data.headers
   headers['plural-forms'] = headers['plural-forms'] || DEFAULT_HEADERS['plural-forms']
   headers['content-type'] = headers['content-type'] || DEFAULT_HEADERS['content-type']
 
-  var nplurals = /nplurals ?= ?(\d)/.exec(headers['plural-forms'])[1]
+  const nplurals = /nplurals ?= ?(\d)/.exec(headers['plural-forms'])[1]
 
   inputs
     .forEach(function (file) {
-      var resolvedFilePath = path.join(process.cwd(), file)
-      var src = fs.readFileSync(resolvedFilePath, 'utf8')
+      const resolvedFilePath = path.join(process.cwd(), file)
+      const src = fs.readFileSync(resolvedFilePath, 'utf8')
 
+      let ast
       try {
-        var ast = babylon.parse(src, {
+        ast = babylon.parse(src, {
           allowHashBang: true,
           ecmaVersion: Infinity,
           sourceType: 'module',
-          plugins: ['jsx'].concat(plugins)
+          plugins: ['jsx', 'objectRestSpread'].concat(plugins)
         })
       } catch (e) {
-        console.error(`SyntaxError in ${file} (line: ${e.loc.line}, column: ${e.loc.column})`)
-        process.exit(1)
+        throw new Error(`SyntaxError in ${file} (line: ${e.loc.line}, column: ${e.loc.column})`)
       }
 
       walk.simple(ast.program, {
         CallExpression: function (node) {
           if (functionNames.hasOwnProperty(node.callee.name) ||
-            node.callee.property && functionNames.hasOwnProperty(node.callee.property.name)) {
-            var functionName = functionNames[node.callee.name] || functionNames[node.callee.property.name]
-            var translate = {}
+            (node.callee.property && functionNames.hasOwnProperty(node.callee.property.name))) {
+            const functionName = functionNames[node.callee.name] || functionNames[node.callee.property.name]
+            const translate = {}
 
-            var args = node.arguments
+            const args = node.arguments
             for (var i = 0, l = args.length; i < l; i++) {
-              var name = functionName[i]
+              const name = functionName[i]
 
               if (name && name !== 'count' && name !== 'domain') {
-                var arg = args[i]
-                var value = arg.value
+                const arg = args[i]
+                const value = arg.value
 
                 if (value) {
-                  var line = node.loc.start.line
+                  const line = node.loc.start.line
                   translate[name] = value
                   translate['comments'] = {
                     reference: file + ':' + line
@@ -79,8 +79,8 @@ function parser (inputs, output, plugins, cb) {
               }
             }
 
-            var context = defaultContext
-            var msgctxt = translate.msgctxt
+            let context = defaultContext
+            const msgctxt = translate.msgctxt
 
             if (msgctxt) {
               data.translations[msgctxt] = data.translations[msgctxt] || {}
