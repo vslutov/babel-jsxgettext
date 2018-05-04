@@ -23,10 +23,10 @@ var parser = require('babel-jsxgettext')
 
 /**
  * The parser function
- * @param  {String}   input  The path to source JavaScript file
- * @param  {String}   output The path of the output PO file
+ * @param  {Array}    inputs  The path to source JavaScript files
+ * @param  {String}   output  The path of the output PO file
  * @param  {String}   plugins Babel plugins, separate by `,`
- * @param  {Function} cb     The callback function
+ * @param  {Function} cb      The callback function
  */
 parser(inputs, output, plugins, function (err) {
   if (err) throw err
@@ -44,7 +44,7 @@ Install globally with npm `npm install babel-jsxgettext -g`
   Options
     --help                     Show this help
     --version                  Current version of package
-    -p | --plugins             String - Babylon plugins list (`jsx` is always included)'
+    -p | --plugins             String - Babylon plugins list (`jsx` and `objectRestSpread` is always included)'
     -i | --input               String - The path to soure JavaScript file
     -o | --output              String - The path of the output PO file
 

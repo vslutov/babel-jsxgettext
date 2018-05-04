@@ -1,30 +1,46 @@
 #!/usr/bin/env node
 
-var path = require('path')
-var meow = require('meow')
-var parser = require('../')
+const path = require('path')
+const meow = require('meow')
+const fs = require('mz/fs')
+const parser = require('../parser')
 
-var cli = meow(`
-  Options
-    --help                     Show this help
-    --version                  Current version of package
-    -p, --plugins              String - Babylon plugins list ('jsx' is always included)
-    -i, --input                String - The path to soure JavaScript file
-    -o, --output               String - The path of the output PO file
+const main = async () => {
+  const cli = meow(`
+    Options
+      --help                     Show this help
+      --version                  Current version of package
+      -p, --plugins              String - Babylon plugins list ('jsx' and 'objectRestSpread' are always included)
+      -i, --input                String - The path to soure JavaScript file
+      -o, --output               String - The path of the output PO file
 
-  Usage
-    $ babel-jsxgettext <input> <output>
+    Usage
+      $ babel-jsxgettext <input> <output>
 
-  Examples
-    $ babel-jsxgettext ./test/*.js test.po',
-    $ babel-jsxgettext --plugins "classProperties,objectRestSpread" ./test/*.js test.po',
-`)
+    Examples
+      $ babel-jsxgettext ./test/*.js -o test.po',
+      $ babel-jsxgettext --plugins "classProperties,objectRestSpread" ./test/*.js -o test.po',
+  `)
 
-let plugins = cli.flags.p || cli.flags.plugins || ''
-plugins = plugins.split(',')
-const output = path.join(process.cwd(), cli.flags.o || cli.flags.output || 'messages.pot')
+  const plugins = (cli.flags.p || cli.flags.plugins || '').split(',')
+  const output = cli.flags.o || cli.flags.output || 'messages.po'
 
-parser(cli.input, output, plugins, function (err) {
-  if (err) throw err
-  console.log('Job completed!')
-})
+  const inputs = []
+  for (file of cli.input) {
+    const resolvedFilePath = path.join(process.cwd(), file)
+    const src = await fs.readFile(resolvedFilePath, 'utf8')
+    inputs.push(src)
+  }
+
+  const buffer = await parser(inputs, plugins)
+
+  if (output === '-') {
+    process.stdout.write(buffer)
+  } else {
+    await fs.writeFile(path.join(process.cwd(), output), buffer)
+  }
+}
+
+if (typeof require != 'undefined' && require.main==module) {
+  main();
+}
