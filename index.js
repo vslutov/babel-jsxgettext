@@ -5,10 +5,7 @@ const path = require("path")
 const parser = require("./parser")
 const pluginName = "jsxgettext-stream"
 
-module.exports = (config) => {
-  config = Object.assign({
-    plugins: []
-  }, config)
+module.exports = ({plugins = []} = {}) => {
 
   return through.obj(function (file, enc, cb) {
     const { contents } = file
@@ -23,7 +20,7 @@ module.exports = (config) => {
       return cb()
     }
 
-    file.contents = parser(contents, config.plugins)
+    file.contents = parser(contents, plugins)
 
     this.push(file)
     cb()

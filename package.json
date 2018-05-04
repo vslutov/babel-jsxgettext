@@ -22,7 +22,10 @@
     "babel",
     "jsx",
     "es6",
-    "es7"
+    "es7",
+    "gulpplugin",
+    "po",
+    "gettext"
   ],
   "bin": {
     "jsxgettext-stream": "./bin/cli.js"
