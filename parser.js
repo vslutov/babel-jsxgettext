@@ -29,17 +29,17 @@ module.exports = async (inputs, plugins) => {
 
   const nplurals = /nplurals ?= ?(\d)/.exec(headers['plural-forms'])[1]
 
-  for (const src of inputs) {
+  for (const { path, contents } of inputs) {
     let ast
     try {
-      ast = babylon.parse(src, {
+      ast = babylon.parse(contents.toString('utf8'), {
         allowHashBang: true,
         ecmaVersion: Infinity,
         sourceType: 'module',
-        plugins: ['jsx', 'objectRestSpread'].concat(plugins)
+        plugins: ['jsx'].concat(plugins)
       })
     } catch (e) {
-      throw new Error(`SyntaxError in ${file} (line: ${e.loc.line}, column: ${e.loc.column})`)
+      throw new Error(`SyntaxError in ${path} (line: ${e.loc.line}, column: ${e.loc.column}): ${e.message}`)
     }
 
     walk.simple(ast.program, {
@@ -61,7 +61,7 @@ module.exports = async (inputs, plugins) => {
                 const line = node.loc.start.line
                 translate[name] = value
                 translate['comments'] = {
-                  reference: file + ':' + line
+                  reference: path + ':' + line
                 }
               }
 

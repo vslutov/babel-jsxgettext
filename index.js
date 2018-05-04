@@ -8,8 +8,6 @@ const pluginName = "jsxgettext-stream"
 module.exports = ({plugins = []} = {}) => {
 
   return through.obj(function (file, enc, cb) {
-    const { contents } = file
-
     if (file.isNull()) {
       this.push(file)
       return cb()
@@ -20,9 +18,10 @@ module.exports = ({plugins = []} = {}) => {
       return cb()
     }
 
-    file.contents = parser(contents, plugins)
-
-    this.push(file)
-    cb()
+    const self = this
+    parser([file], plugins).then(result => {
+      file.contents = result
+      cb(null, file)
+    }).catch(e => cb(e, null))
   })
 }
