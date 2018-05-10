@@ -1,5 +1,3 @@
-const fs = require('mz/fs')
-const path = require('path')
 const gettextParser = require('gettext-parser')
 const babylon = require('babylon')
 const walk = require('babylon-walk')

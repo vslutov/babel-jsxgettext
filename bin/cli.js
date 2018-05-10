@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const path_join = require('path').join
+const pathJoin = require('path').join
 const meow = require('meow')
 const fs = require('mz/fs')
 const parser = require('../parser')
@@ -28,8 +28,8 @@ const main = async () => {
   const output = cli.flags.o || cli.flags.output || 'messages.po'
 
   const inputs = []
-  for (file of cli.input) {
-    const path = path_join(process.cwd(), file)
+  for (const file of cli.input) {
+    const path = pathJoin(process.cwd(), file)
     const contents = await fs.readFile(path)
     inputs.push({path, contents})
   }
@@ -39,10 +39,10 @@ const main = async () => {
   if (output === '-') {
     process.stdout.write(buffer)
   } else {
-    await fs.writeFile(path_join(process.cwd(), output), buffer)
+    await fs.writeFile(pathJoin(process.cwd(), output), buffer)
   }
 }
 
-if (typeof require != 'undefined' && require.main==module) {
+if (typeof require !== 'undefined' && require.main === module) {
   main()
 }
