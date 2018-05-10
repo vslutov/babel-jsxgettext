@@ -14,11 +14,11 @@ Options
   -o, --output               String - The path of the output PO file
 
 Usage
-  $ babel-jsxgettext <input> <output>
+  $ jsxgettext-stream <input> <output>
 
 Examples
-  $ babel-jsxgettext ./test/*.js -o test.po',
-  $ babel-jsxgettext --plugins "classProperties,objectRestSpread" ./test/*.js -o test.po
+  $ jsxgettext-stream ./test/*.js -o test.po',
+  $ jsxgettext-stream --plugins "classProperties,objectRestSpread" ./test/*.js -o test.po
 `
 
 const main = async () => {

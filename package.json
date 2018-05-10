@@ -1,6 +1,6 @@
 {
   "name": "@vslutov/jsxgettext-stream",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "A tool like jsxgettext, but works for es6 + jsx that babel support",
   "main": "index.js",
   "files": [

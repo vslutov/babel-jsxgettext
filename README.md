@@ -1,4 +1,4 @@
-# jsxgettext-stream
+# @vslutov/jsxgettext-stream
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][downloads-url]
@@ -9,7 +9,7 @@ A tool like [jsxgettext](https://www.npmjs.com/package/jsxgettext), but works fo
 ## Usage
 
 ```
-$ npm install babel-jsxgettext --save-dev
+$ npm install @vslutov/jsxgettext-stream --save-dev
 ```
 
 ### Gulp usage
@@ -46,7 +46,7 @@ const main = async () {
 
 ### Command line usage
 
-Install globally with npm `npm install babel-jsxgettext -g`
+Install globally with npm `npm install jsxgettext-stream -g`
 
 ```
   A tool like jsxgettext, but works for es6 + jsx that babel support
@@ -59,12 +59,12 @@ Install globally with npm `npm install babel-jsxgettext -g`
     -o | --output              String - The path of the output PO file
 
   Usage
-    $ babel-jsxgettext --help
-    $ babel-jsxgettext <input> <output>
+    $ jsxgettext-stream --help
+    $ jsxgettext-stream <input> <output>
 
   Examples
-    $ babel-jsxgettext ./test/*.js ./test.po
-    $ babel-jsxgettext --plugins "classProperties,objectRestSpread" ./test/*.js test.po
+    $ jsxgettext-stream ./test/*.js ./test.po
+    $ jsxgettext-stream --plugins "classProperties,objectRestSpread" ./test/*.js test.po
 ```
 
 ### License
