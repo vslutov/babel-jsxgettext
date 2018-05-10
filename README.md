@@ -4,6 +4,11 @@
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
 
+Fork of [fraserxu/babel-jsxgettext](https://github.com/fraserxu/babel-jsxgettext)
+Improvements:
+- Sync interface to gnu xgettext
+- Add gulp stream support
+
 A tool like [jsxgettext](https://www.npmjs.com/package/jsxgettext), but works for `es6` + `jsx` that babel support.
 
 ## Usage
