@@ -4,7 +4,7 @@ const through = require('through2')
 const parser = require('./parser')
 const pluginName = 'jsxgettext-stream'
 
-module.exports = ({plugins = []} = {}) => {
+module.exports = ({ plugins = [] } = {}) => {
   return through.obj(function (file, enc, cb) {
     if (file.isNull()) {
       this.push(file)

@@ -34,7 +34,7 @@ const main = async () => {
   for (let file of cli.input) {
     const path = pathJoin(process.cwd(), file)
     const contents = await fs.readFile(path)
-    inputs.push({path, contents})
+    inputs.push({ path, contents })
   }
 
   const buffer = await parser(inputs, plugins)
