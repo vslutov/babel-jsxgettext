@@ -1,7 +1,5 @@
-const fs = require('mz/fs')
-const path = require('path')
 const gettextParser = require('gettext-parser')
-const babylon = require('babylon')
+const babelParser = require('@babel/parser')
 const walk = require('babylon-walk')
 
 const functionNames = require('./lib/constant').DEFAULT_FUNCTION_NAMES
@@ -32,7 +30,7 @@ module.exports = async (inputs, plugins) => {
   for (const { path, contents } of inputs) {
     let ast
     try {
-      ast = babylon.parse(contents.toString('utf8'), {
+      ast = babelParser.parse(contents.toString('utf8'), {
         allowHashBang: true,
         ecmaVersion: Infinity,
         sourceType: 'module',

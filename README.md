@@ -1,9 +1,9 @@
 # @vslutov/jsxgettext-stream
 
 [![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
-
 
 A tool like [jsxgettext](https://www.npmjs.com/package/jsxgettext), but works for `es6` + `jsx` that babel support.
 
@@ -38,9 +38,9 @@ var parser = require('@vslutov/jsxgettext-stream/parser')
 
 /**
  * The parser function
- * @param  {Array}    inputs  The path to source JavaScript files
- * @param  {Array}    plugins Babel plugins, see https://github.com/babel/babel/tree/master/packages/babylon
- * @return {Promise}
+ * @param  {String}   input  The path to source JavaScript file
+ * @param  {String}   plugins Babel parser plugins, separate by `,`
+ * @param  {Function} cb     The callback function
  */
 const main = async () {
   inputs = input_fnames.map(path => ({ path, contents: fs.readFileSync(path) }))
@@ -48,10 +48,9 @@ const main = async () {
 }
 ```
 
-
 ### Command line usage
 
-Install globally with npm `npm install jsxgettext-stream -g`
+Install globally with npm `npm install @vslutov/jsxgettext-stream -g`
 
 ```
   A tool like jsxgettext, but works for es6 + jsx that babel support
@@ -59,7 +58,7 @@ Install globally with npm `npm install jsxgettext-stream -g`
   Options
     --help                     Show this help
     --version                  Current version of package
-    -p | --plugins             String - Babylon plugins list (`jsx` is always included)'
+    -p | --plugins             String - Babel parser plugins list (`jsx` is always included)'
     -i | --input               String - The path to soure JavaScript file
     -o | --output              String - The path of the output PO file
 
@@ -77,6 +76,8 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/@vslutov/jsxgettext-stream.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@vslutov/jsxgettext-stream
+[travis-image]: https://img.shields.io/travis/fraserxu/babel-jsxgettext/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/fraserxu/babel-jsxgettext
 [downloads-image]: http://img.shields.io/npm/dm/@vslutov/jsxgettext-stream.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/@vslutov/jsxgettext-stream
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square

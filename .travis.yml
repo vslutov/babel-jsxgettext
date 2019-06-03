@@ -1,10 +1,14 @@
 language: node_js
 node_js:
-  - "4"
-  - "5"
-  - "6"
-install:
-  - npm install
-script:
-  - npm test
-sudo: false
+  - "stable"
+
+jobs:
+  include:
+    - stage: npm release
+      node_js: "stable"
+      deploy:
+        provider: npm
+        api_key: $NPM_API_KEY
+        email: vs@lutov.net
+        on:
+          tags: true
