@@ -36,9 +36,6 @@
   "bin": {
     "jsxgettext-stream": "./bin/cli.js"
   },
-  "standard": {
-    "parser": "babel-eslint"
-  },
   "author": "Vladimir Lutov",
   "license": "MIT",
   "bugs": {
@@ -55,12 +52,20 @@
     "through2": "^3.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
+    "commitizen": "^3.0.7",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^1.3.1",
     "standard": "^12.0.1"
   },
   "engines": {
     "node": ">=8.11.1",
     "npm": ">=5.6.0",
     "yarn": ">=1.5.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
   }
 }
